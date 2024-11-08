@@ -1,7 +1,12 @@
+/// <reference path="entry.d.ts" />
+/// <reference path="identities.d.ts" />
+/// <reference path="storage.d.ts" />
+
 declare module "@orbitdb/access-controllers" {
     import type { LogEntry } from "@orbitdb/entry";
-    import type { OrbitDB, Storage } from "@orbitdb/core";
-    import type { Identities } from "@orbitdb/identities";
+    import type { IOrbitDB } from "@orbitdb/core";
+    import type { IStorage } from "@orbitdb/storage";
+    import type { IIdentities } from "@orbitdb/identities";
     import type EventEmitter from "events";
 
     export type AccessController<T = void> = (options?: T) => Promise<{
@@ -18,22 +23,22 @@ declare module "@orbitdb/access-controllers" {
         events: EventEmitter;
     }>;
 
-    export type IPFSAccessControllerOptions = {
-        orbitdb: OrbitDB;
-        identities: Identities;
+    export interface IPFSAccessControllerOptions {
+        orbitdb: IOrbitDB;
+        identities: IIdentities;
         address: string;
-    };
+    }
 
-    export type OrbitDBAccessControllerOptions = {
-        orbitdb: OrbitDB;
-        identities: Identities;
+    export interface OrbitDBAccessControllerOptions {
+        orbitdb: IOrbitDB;
+        identities: IIdentities;
         address: string;
         name: string;
-    };
+    }
 
     export function IPFSAccessController(params: {
         write: string[];
-        storage: Storage;
+        storage: IStorage;
     }): AccessController<IPFSAccessControllerOptions>;
 
     export function OrbitDBAccessController(params: {

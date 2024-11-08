@@ -1,5 +1,5 @@
 declare module "@orbitdb/identity" {
-    export type Identity = {
+    export interface IIdentity {
         id: string;
         publicKey: Object;
         signatures: {
@@ -7,11 +7,11 @@ declare module "@orbitdb/identity" {
             publicKey: string;
         };
         type: string;
-        sign: (identity: Identity, data: string) => Promise<string>;
+        sign: (identity: IIdentity, data: string) => Promise<string>;
         verify: (
             signature: string,
             publicKey: string,
             data: string,
         ) => Promise<boolean>;
-    };
+    }
 }

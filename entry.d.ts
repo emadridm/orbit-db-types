@@ -1,7 +1,10 @@
+/// <reference path="clock.d.ts" />
+/// <reference path="identities.d.ts" />
+
 declare module "@orbitdb/entry" {
-    import type { Identity } from "@orbitdb/identity";
+    import type { IIdentity } from "@orbitdb/identity";
     import { Clock } from "@orbitdb/clock";
-    import { Identities } from "@orbitdb/identities";
+    import { IIdentities } from "@orbitdb/identities";
 
     // export type LogEntry<T = unknown> = {
     export type LogEntry = {
@@ -21,14 +24,14 @@ declare module "@orbitdb/entry" {
 
     export const Entry: {
         create: (
-            identity: Identity,
+            identity: IIdentity,
             id: string,
             payload: unknown,
             clock?: Clock,
             next?: string[],
             refs?: string[],
         ) => Promise<LogEntry>;
-        verify: (identities: Identities, entry: LogEntry) => Promise<boolean>;
+        verify: (identities: IIdentities, entry: LogEntry) => Promise<boolean>;
         decode: (bytes: Uint8Array) => Promise<LogEntry>;
         isEntry: (obj: object) => boolean;
         isEqual: (a: LogEntry, b: LogEntry) => boolean;

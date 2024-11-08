@@ -1,7 +1,7 @@
 declare module "@orbitdb/storage" {
     import type { HeliaLibp2p } from "helia";
 
-    export interface Storage {
+    export interface IStorage {
         put;
         get;
         del;
@@ -11,28 +11,28 @@ declare module "@orbitdb/storage" {
         close;
     }
 
-    export type IPFSBlockStorageOptions = {
-        ipfs: HeliaLibp2p;
+    export interface IPFSBlockStorageOptions {
+        ipfs: HeliaLibp2p<any>;
         pin: boolean;
         timeout: number;
-    };
+    }
 
     export function IPFSBlockStorage(
         param: IPFSBlockStorageOptions,
-    ): Promise<Storage>;
+    ): Promise<IStorage>;
 
-    export type LevelStorageOptions = {
+    export interface LevelStorageOptions {
         path: string;
         valueEncoding: string;
-    };
+    }
 
-    export function LevelStorage(param: LevelStorageOptions): Promise<Storage>;
+    export function LevelStorage(param: LevelStorageOptions): Promise<IStorage>;
 
-    export type LRUStorageOptions = {
+    export interface LRUStorageOptions {
         size: string;
-    };
+    }
 
-    export function LRUStorge(param: LRUStorageOptions): Promise<Storage>;
+    export function LRUStorge(param: LRUStorageOptions): Promise<IStorage>;
 
-    export function MemoryStorage(): Promise<Storage>;
+    export function MemoryStorage(): Promise<IStorage>;
 }

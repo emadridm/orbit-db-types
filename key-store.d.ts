@@ -1,12 +1,14 @@
+/// <reference path="storage.d.ts" />
+
 declare module "@orbitdb/key-store" {
-    import type { Storage } from "@orbitdb/storage";
+    import type { IStorage } from "@orbitdb/storage";
 
-    export type KeyStoreOptions = {
-        storage?: Storage;
+    export interface KeyStoreOptions {
+        storage?: IStorage;
         path?: string;
-    };
+    }
 
-    export class KeyStore {
+    export interface IKeyStore {
         clear;
         close;
         hasKey;
@@ -16,5 +18,5 @@ declare module "@orbitdb/key-store" {
         getPublic;
     }
 
-    export function KeyStore(param?: KeyStoreOptions): Promise<KeyStore>;
+    export function KeyStore(param?: KeyStoreOptions): Promise<IKeyStore>;
 }

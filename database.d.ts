@@ -1,27 +1,33 @@
+/// <reference path="access-controllers.d.ts" />
+/// <reference path="log.d.ts" />
+/// <reference path="identity.d.ts" />
+/// <reference path="storage.d.ts" />
+
 declare module "@orbitdb/database" {
     import type { HeliaLibp2p } from "helia";
-    import type { Identity } from "@orbitdb/identity";
+    import type { IIdentity } from "@orbitdb/identity";
     import type EventEmitter from "events";
     import type { AccessController } from "@orbitdb/access-controllers";
-    import type { Log } from "@orbitdb/log";
+    import type { ILog } from "@orbitdb/log";
+    import type { IStorage } from "@orbitdb/storage";
 
-    export type DatabaseOptions = {
+    export interface DatabaseOptions {
         ipfs: HeliaLibp2p;
-        identity?: Identity;
+        identity?: IIdentity;
         address: string;
         name?: string;
         access?: AccessController;
         directory?: string;
         meta?: object;
-        headsStorage?: Storage;
-        entryStorage?: Storage;
-        indexStorage?: Storage;
+        headsStorage?: IStorage;
+        entryStorage?: IStorage;
+        indexStorage?: IStorage;
         referencesCount?: number;
         syncAutomatically?: boolean;
         onUpdate?: () => void;
-    };
+    }
 
-    export class Database {
+    export interface IDatabase {
         type: string;
         addOperation: (args: {
             op: string;
@@ -33,8 +39,8 @@ declare module "@orbitdb/database" {
         drop(): Promise<void>;
         events: EventEmitter;
         access: AccessController;
-        log: Log;
+        log: ILog;
     }
 
-    export function Database(): Promise<Database>;
+    export function Database(): Promise<IDatabase>;
 }

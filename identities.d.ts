@@ -1,27 +1,32 @@
+/// <reference path="key-store.d.ts" />
+/// <reference path="identity.d.ts" />
+/// <reference path="storage.d.ts" />
+
 declare module "@orbitdb/identities" {
-    import type { KeyStore } from "@orbitdb/key-store";
+    import type { IKeyStore } from "@orbitdb/key-store";
     import type { HeliaLibp2p } from "helia";
-    import type { Identity } from "@orbitdb/identity";
+    import type { IIdentity } from "@orbitdb/identity";
+    import type { IStorage } from "@orbitdb/storage";
 
-    export type IdentitiesOptions = {
-        keystore?: KeyStore;
+    export interface IdentitiesOptions {
+        keystore?: IKeyStore;
         path?: string;
-        storage?: Storage;
+        storage?: IStorage;
         ipfs?: HeliaLibp2p;
-    };
+    }
 
-    export class Identities {
-        createIdentity: (options: Object) => Promise<Identity>;
-        verifyIdentity: (identity: Identity) => Promise<boolean>;
-        getIdentity: (hash: string) => Promise<Identity>;
-        sign: (identity: Identity, data: string) => Promise<string>;
+    export interface IIdentities {
+        createIdentity: (options: Object) => Promise<IIdentity>;
+        verifyIdentity: (identity: IIdentity) => Promise<boolean>;
+        getIdentity: (hash: string) => Promise<IIdentity>;
+        sign: (identity: IIdentity, data: string) => Promise<string>;
         verify: (
             signature: string,
             publicKey: string,
             data: string,
         ) => Promise<boolean>;
-        keystore: KeyStore;
+        keystore: IKeyStore;
     }
 
-    export function Identities(param?: IdentitiesOptions): Promise<Identities>;
+    export function Identities(param?: IdentitiesOptions): Promise<IIdentities>;
 }

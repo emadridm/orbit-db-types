@@ -1,5 +1,6 @@
 /// <reference path="clock.d.ts" />
 /// <reference path="identities.d.ts" />
+/// <reference path="identity.d.ts" />
 
 declare module "@orbitdb/entry" {
     import type { IIdentity } from "@orbitdb/identity";
@@ -14,7 +15,7 @@ declare module "@orbitdb/entry" {
         next: string[];
         refs: string[];
         clock: Clock;
-        v: Number;
+        v: number;
         key: string;
         identity: string;
         sig: string;

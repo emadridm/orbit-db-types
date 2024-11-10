@@ -12,9 +12,9 @@ declare module "@orbitdb/database" {
     import type { IStorage } from "@orbitdb/storage";
 
     export interface DatabaseOptions {
-        ipfs: HeliaLibp2p;
+        ipfs: HeliaLibp2p<any>;
         identity?: IIdentity;
-        address: string;
+        address?: string;
         name?: string;
         access?: AccessController;
         directory?: string;
@@ -42,5 +42,5 @@ declare module "@orbitdb/database" {
         log: ILog;
     }
 
-    export function Database(): Promise<IDatabase>;
+    export function Database(params: DatabaseOptions): Promise<IDatabase>;
 }

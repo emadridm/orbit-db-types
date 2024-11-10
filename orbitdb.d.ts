@@ -1,34 +1,45 @@
 /// <reference path="identity.d.ts" />
 /// <reference path="database.d.ts" />
 /// <reference path="key-store.d.ts" />
+/// <reference path="databases.d.ts" />
 
 declare module "@orbitdb/orbitdb" {
     import type { HeliaLibp2p } from "helia";
-    import type { Identity } from "@orbitdb/identity";
+    import type { IIdentity } from "@orbitdb/identity";
     import type { PeerId } from "@libp2p/interface";
-    import type { DatabaseOptions } from "@orbitdb/database";
     import type { IDatabase } from "@orbitdb/database";
-    import type { KeyStore } from "@orbitdb/key-store";
+    import type { IKeyStore } from "@orbitdb/key-store";
+    import type { IDocuments, IEventsDB } from "@orbitdb/databases";
 
     export interface OrbitDBOptions {
         ipfs: HeliaLibp2p<any>;
         id?: string;
-        identity?: Identity | Object;
+        identity?: IIdentity | Object;
         identities?: Object;
         directory?: string;
     }
 
     export interface IOrbitDB {
         id: string;
-        open: (
+        open: <T extends IDatabase>(
             address: string,
-            OrbitDBDatabaseOptions?: DatabaseOptions,
-        ) => Promise<IDatabase>;
+            params?: {
+                type?: "events" | "documents" | "keyvalue";
+                meta?: any;
+                sync?: boolean;
+                Database?: IDatabase;
+                AccessController?: any;
+                headsStorage?: any;
+                entryStorage?: any;
+                indexStorage?: any;
+                referencesCount?: any;
+            },
+        ) => Promise<T>;
         stop: Promise<void>;
         ipfs: HeliaLibp2p<any>;
         directory: string;
-        keystore: KeyStore;
-        identity: Identity;
+        keystore: IKeyStore;
+        identity: IIdentity;
         peerId: PeerId;
     }
 

@@ -1,7 +1,9 @@
+/// <reference path="index.d.ts" />
+
 import { createHelia } from "helia";
 import { createLibp2p } from "libp2p";
-import { OrbitDBOptions } from "@orbitdb/core";
-import { createOrbitDB } from "@orbitdb/core";
+import { OrbitDBOptions, createOrbitDB } from "@orbitdb/core";
+import { IEventsDB } from "@orbitdb/databases";
 
 const libp2p = await createLibp2p();
 const ipfs = await createHelia({ libp2p });
@@ -11,6 +13,8 @@ const options: OrbitDBOptions = {
 };
 
 const orbitdb = await createOrbitDB(options);
-const mydb = await orbitdb.open("mydb");
+const mydb = await orbitdb.open<IEventsDB>("mydb");
+
+const all = await mydb.all();
+
 console.log(mydb.address);
-await mydb.addOperation({ op: "add", key: null, value: "hola" });

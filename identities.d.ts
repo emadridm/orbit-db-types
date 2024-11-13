@@ -29,4 +29,19 @@ declare module "@orbitdb/identities" {
     }
 
     export function Identities(param?: IdentitiesOptions): Promise<IIdentities>;
+
+    export function isIdentity(identity: Object | IIdentity): Boolean;
+
+    export function useIdentityProvider(identityProvider: IIdentity): void;
+
+    export function PublicKeyIdentityProvider({ keystore: IKeyStore }): Promise<
+        () => {
+            type: string;
+            getId: (param?: { id: string }) => Promise<string>;
+            signIdentity: (
+                data: unknown,
+                param?: { id: string },
+            ) => Promise<string>;
+        }
+    >;
 }

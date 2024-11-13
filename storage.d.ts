@@ -32,7 +32,12 @@ declare module "@orbitdb/storage" {
         size: string;
     }
 
-    export function LRUStorge(param: LRUStorageOptions): Promise<IStorage>;
+    export function LRUStorage(param: LRUStorageOptions): Promise<IStorage>;
 
     export function MemoryStorage(): Promise<IStorage>;
+
+    export function ComposedStorage(
+        storage1: IStorage,
+        storage2: IStorage,
+    ): Promise<IStorage>;
 }

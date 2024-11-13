@@ -1,9 +1,9 @@
-/// <reference path="entry.d.ts" />
+/// <reference path="oplog.d.ts" />
 /// <reference path="identities.d.ts" />
 /// <reference path="storage.d.ts" />
 
 declare module "@orbitdb/access-controllers" {
-    import type { LogEntry } from "@orbitdb/entry";
+    import type { LogEntry } from "@orbitdb/oplog";
     import type { IOrbitDB } from "@orbitdb/core";
     import type { IStorage } from "@orbitdb/storage";
     import type { IIdentities } from "@orbitdb/identities";
@@ -44,4 +44,8 @@ declare module "@orbitdb/access-controllers" {
     export function OrbitDBAccessController(params: {
         write: string[];
     }): AccessController<OrbitDBAccessControllerOptions>;
+
+    export function useAccessController(
+        accessController: AccessController,
+    ): void;
 }

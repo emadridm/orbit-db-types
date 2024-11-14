@@ -18,6 +18,9 @@ $ pnpm i @constl/orbit-db-types
 
 Contributions are welcome. :)
 
+# Getting started
+npx tsx ./test/getting-started-01.ts
+
 # License
 
 [MIT](LICENSE) © 2018 Łukasz Mariański

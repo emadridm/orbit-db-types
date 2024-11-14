@@ -30,7 +30,12 @@ declare module "@orbitdb/core" {
 
     export { isValidAddress, parseAddress } from "@orbitdb/address";
 
-    export { Log, Entry, DefaultAccessController } from "@orbitdb/oplog";
+    export {
+        Log,
+        LogEntry,
+        Entry,
+        DefaultAccessController,
+    } from "@orbitdb/oplog";
 
     export { default as Database } from "@orbitdb/database";
 

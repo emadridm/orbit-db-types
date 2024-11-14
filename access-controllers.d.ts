@@ -38,7 +38,7 @@ declare module "@orbitdb/access-controllers" {
 
     export function IPFSAccessController(params: {
         write: string[];
-        storage: IStorage;
+        storage?: IStorage;
     }): AccessController<IPFSAccessControllerOptions>;
 
     export function OrbitDBAccessController(params: {

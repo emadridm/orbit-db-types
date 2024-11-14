@@ -9,7 +9,6 @@ declare module "@orbitdb/orbitdb" {
     import type { PeerId } from "@libp2p/interface";
     import type { IDatabase } from "@orbitdb/database";
     import type { IKeyStore } from "@orbitdb/key-store";
-    import type { IDocuments, IEventsDB } from "@orbitdb/databases";
 
     export interface OrbitDBOptions {
         ipfs: HeliaLibp2p<any>;
@@ -35,7 +34,7 @@ declare module "@orbitdb/orbitdb" {
                 referencesCount?: any;
             },
         ) => Promise<T>;
-        stop: Promise<void>;
+        stop: () => Promise<void>;
         ipfs: HeliaLibp2p<any>;
         directory: string;
         keystore: IKeyStore;

@@ -15,6 +15,8 @@ const main = async () => {
     const libp2p = await createLibp2p(Libp2pOptions);
     const ipfs = await createHelia({ libp2p, blockstore });
 
+    console.log(`ipfs.libp2p.peerId = ${ipfs.libp2p.peerId}`);
+
     const orbitdb = await createOrbitDB({
         ipfs,
         directory: `./${randDir}/orbitdb`,
@@ -23,6 +25,7 @@ const main = async () => {
     let db: IEventsDB;
 
     if (process.argv[2]) {
+        console.log(`Opeing database ${process.argv[2]}`);
         db = await orbitdb.open(process.argv[2]);
     } else {
         db = await orbitdb.open("my-db", {
@@ -36,7 +39,7 @@ const main = async () => {
         );
     }
 
-    db.events.on("updated", async (entry: LogEntry) => {
+    db.events.on("update", async (entry: LogEntry) => {
         //@ts-ignore payload a type of dag-cbor. View https://ipld.io/, https://github.com/ipld/js-dag-cbor, https://www.npmjs.com/package/@types/cbor-js
         console.log("update", entry.payload.value);
     });

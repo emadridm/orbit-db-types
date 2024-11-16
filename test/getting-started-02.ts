@@ -15,7 +15,9 @@ const main = async () => {
     const libp2p = await createLibp2p(Libp2pOptions);
     const ipfs = await createHelia({ libp2p, blockstore });
 
-    console.log(`ipfs.libp2p.peerId = ${ipfs.libp2p.peerId}`);
+    ipfs.libp2p.getMultiaddrs().forEach((val) => {
+        console.log(val);
+    });
 
     const orbitdb = await createOrbitDB({
         ipfs,
@@ -57,6 +59,8 @@ const main = async () => {
         await db.close();
         await orbitdb.stop();
         await ipfs.stop();
+
+        process.exit();
     });
 };
 

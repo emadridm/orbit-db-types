@@ -7,6 +7,7 @@ import { LevelBlockstore } from "blockstore-level";
 import { Libp2pOptions } from "./libp2p-config";
 import { IEventsDB } from "@orbitdb/databases";
 import { LogEntry } from "@orbitdb/oplog";
+import { multiaddr } from "@multiformats/multiaddr";
 
 const main = async () => {
     let randDir = (Math.random() + 1).toString(36).substring(2);
@@ -26,17 +27,20 @@ const main = async () => {
 
     let db: IEventsDB;
 
-    if (process.argv[2]) {
-        console.log(`Opeing database ${process.argv[2]}`);
-        db = await orbitdb.open(process.argv[2]);
+    if (process.argv[2] && process.argv[3]) {
+        console.log(`Connecting to peer ${process.argv[2]}`);
+        await orbitdb.ipfs.libp2p.dial(multiaddr(process.argv[2]));
+        console.log(`Opening database ${process.argv[3]} ...`);
+        db = await orbitdb.open(process.argv[3]);
     } else {
         db = await orbitdb.open("my-db", {
             AccessController: IPFSAccessController({ write: ["*"] }),
         });
 
         console.log(
-            "my-db address",
+            "my-db peerAddress and dbAddress",
             "(copy my db address and use when launching peer 2)",
+            libp2p.getMultiaddrs().toString(),
             db.address,
         );
     }
@@ -46,7 +50,7 @@ const main = async () => {
         console.log("update", entry.payload.value);
     });
 
-    if (process.argv[2]) {
+    if (process.argv[2] && process.argv[3]) {
         await db.add("hello from second peer");
         await db.add("hello again from second peer");
     } else {
